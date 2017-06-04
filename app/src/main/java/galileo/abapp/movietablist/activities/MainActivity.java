@@ -14,11 +14,9 @@ import java.util.ArrayList;
 
 import galileo.abapp.movietablist.R;
 import galileo.abapp.movietablist.data.MovieDetail;
-import galileo.abapp.movietablist.fragments.MovieBestFragment;
-import galileo.abapp.movietablist.fragments.MovieFavoritesFragment;
 import galileo.abapp.movietablist.fragments.MovieMainFragment;
 
-public class MainActivity extends AppCompatActivity implements MovieMainFragment.addMovieToFavorites, MovieFavoritesFragment.removeFromFavorites{
+public class MainActivity extends AppCompatActivity implements MovieMainFragment.addMovieToFavorites{
 
 
     SectionsPagerAdapter mSectionsPagerAdapter;
@@ -64,12 +62,6 @@ public class MainActivity extends AppCompatActivity implements MovieMainFragment
         }else
             Toast.makeText(getApplicationContext(), "Movie " + movie.getTitle() + " already in Favorites", Toast.LENGTH_SHORT).show();
     }
-	//implementation of MoviesFavoritesFragment interface 
-    @Override
-    public void removeFav(int n) {
-        MovieDetail m = favMovies.remove(n);
-        Toast.makeText(getApplicationContext(),"Movie "+m.getTitle()+" removed from Favorites",Toast.LENGTH_SHORT).show();
-    }
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
@@ -92,16 +84,6 @@ public class MainActivity extends AppCompatActivity implements MovieMainFragment
                     list = new MovieMainFragment();
                     list.setArguments(b);
                     return list;
-                case 1:
-                    b.putSerializable("favs",favMovies);
-                    list = new MovieFavoritesFragment();
-                    list.setArguments(b);
-                    return list;
-                case 2:
-                    b.putSerializable("best",bestMovies);
-                    list = new MovieBestFragment();
-                    list.setArguments(b);
-                    return list;
                 default:
                     return new Fragment();
             }
@@ -118,11 +100,11 @@ public class MainActivity extends AppCompatActivity implements MovieMainFragment
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "MAIN";
+                    return "TAB 1";
                 case 1:
-                    return "FAVS";
+                    return "TAB 2";
                 case 2:
-                    return "BEST";
+                    return "TAB 3";
             }
             return null;
         }
@@ -141,13 +123,6 @@ public class MainActivity extends AppCompatActivity implements MovieMainFragment
         mainMovies.add(new MovieDetail("Star Wars: The Force Awakens","Thirty years after defeating the Galactic Empire, Han Solo and his allies face a new threat from the evil Kylo Ren and his army of Stormtroopers.",75));
         mainMovies.add(new MovieDetail("Zootopia","Determined to prove herself, Officer Judy Hopps, the first bunny on Zootopia's police force, jumps at the chance to crack her first case - even if it means partnering with scam-artist fox Nick Wilde to solve the mystery.",76));
         mainMovies.add(new MovieDetail("Avatar","In the 22nd century, a paraplegic Marine is dispatched to the moon Pandora on a unique mission, but becomes torn between following orders and protecting an alien civilization.",72));
-        setBestMovies();
     }
 	
-	//add the best rated movies to the bestMovies list
-    public void setBestMovies(){
-        for(MovieDetail m: mainMovies)
-            if(m.getRating()>=75)
-                bestMovies.add(m);
-    }
 }
