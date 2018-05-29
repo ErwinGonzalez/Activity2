@@ -1,6 +1,7 @@
 package galileo.abapp.movietablist.data;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,8 +32,9 @@ public class movieAdapter extends RecyclerView.Adapter<movieAdapter.ViewHolder>{
         return context;
     }
 
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.movie_item, parent, false);
 
@@ -40,7 +42,7 @@ public class movieAdapter extends RecyclerView.Adapter<movieAdapter.ViewHolder>{
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
         MovieDetail movie = (MovieDetail)movies.get(position);
 

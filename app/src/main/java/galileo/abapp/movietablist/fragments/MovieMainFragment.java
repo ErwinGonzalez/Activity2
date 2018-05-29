@@ -24,7 +24,6 @@ public class MovieMainFragment extends Fragment implements movieAdapter.handleFa
     RecyclerView rv;
     RecyclerView.LayoutManager manager;
     movieAdapter adapter;
-    TextView tv;
     ArrayList movies;
     addMovieToFavorites mCallback;
 

@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -18,7 +19,9 @@ import galileo.abapp.movietablist.fragments.MovieBestFragment;
 import galileo.abapp.movietablist.fragments.MovieFavoritesFragment;
 import galileo.abapp.movietablist.fragments.MovieMainFragment;
 
-public class MainActivity extends AppCompatActivity implements MovieMainFragment.addMovieToFavorites, MovieFavoritesFragment.removeFromFavorites{
+public class MainActivity extends AppCompatActivity implements MovieMainFragment.addMovieToFavorites,
+                                                                MovieFavoritesFragment.removeFromFavorites,
+                                                                MovieBestFragment.addBestMovieToFavorites{
 
 
     SectionsPagerAdapter mSectionsPagerAdapter;
@@ -33,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements MovieMainFragment
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
 		
         setSupportActionBar(toolbar);
         mainMovies = new ArrayList<>();
@@ -46,10 +49,10 @@ public class MainActivity extends AppCompatActivity implements MovieMainFragment
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.container);
+        mViewPager = findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        TabLayout tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
     }
@@ -58,6 +61,17 @@ public class MainActivity extends AppCompatActivity implements MovieMainFragment
     @Override
     public void addFav(int n) {
         MovieDetail movie = mainMovies.get(n);
+        if(!favMovies.contains(movie)){
+            Toast.makeText(getApplicationContext(), "Movie " + movie.getTitle() + " added to Favorites", Toast.LENGTH_SHORT).show();
+            favMovies.add(movie);
+        }else
+            Toast.makeText(getApplicationContext(), "Movie " + movie.getTitle() + " already in Favorites", Toast.LENGTH_SHORT).show();
+    }
+    //implementation of MoviesBestFragment interface
+    @Override
+    public void addFavBest(int n) {
+        MovieDetail movie = bestMovies.get(n);
+        Log.d("TAG",movie.getTitle());
         if(!favMovies.contains(movie)){
             Toast.makeText(getApplicationContext(), "Movie " + movie.getTitle() + " added to Favorites", Toast.LENGTH_SHORT).show();
             favMovies.add(movie);
